@@ -1,0 +1,11 @@
+<resources>
+
+    <style name="Theme.MateFile" parent="Theme.DayNight.NoActionBar" />
+
+    <style name="Theme.DayNight.NoActionBar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+
+        <item name="android:statusBarColor">@android:color/transparent</item>
+
+    </style>
+
+</resources>
