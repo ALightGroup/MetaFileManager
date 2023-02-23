@@ -1,11 +1,11 @@
 <resources>
 
-    <style name="Theme.MateFile" parent="Theme.Light.NoActionBar" />
+  <style name="Theme.MateFile" parent="Theme.Light.NoActionBar" />
 
-    <style name="Theme.Light.NoActionBar" parent="Theme.MaterialComponents.Light.NoActionBar">
+  <style name="Theme.Light.NoActionBar" parent="Theme.MaterialComponents.Light.NoActionBar">
 
-        <item name="android:statusBarColor">@android:color/transparent</item>
+    <item name="android:statusBarColor">@android:color/transparent</item>
 
-    </style>
+  </style>
 
 </resources>
