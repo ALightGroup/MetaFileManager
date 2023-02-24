@@ -7,15 +7,20 @@ plugins {
 
 android {
   namespace 'com.alg.metafile'
-  compileSdkPreview "UpsideDownCake"
+  compileSdkPreview libs.versions.compilesdk.get()
 
   defaultConfig {
     applicationId "com.alg.metafile"
-    minSdk 23
-    targetSdkPreview "UpsideDownCake"
+    minSdk libs.versions.minSdk.get().toInteger()
+    targetSdkPreview libs.versions.targetsdk.get()
     versionCode 1
     versionName "1.0"
     testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    javaCompileOptions {
+      annotationProcessorOptions {
+        arguments = [AROUTER_MODULE_NAME: project.getName()]
+      }
+    }
   }
   buildTypes {
     release {
@@ -28,16 +33,15 @@ android {
     targetCompatibility JavaVersion.VERSION_11
   }
   kotlinOptions {
-    jvmTarget = '11'
+    jvmTarget = libs.versions.jvmTarget.get()
   }
 }
 
 dependencies {
 
   implementation project(":core:lib")
-  implementation project(":core:resources")
-  implementation project(":feature:file:file_ui")
+  implementation project(":feature:file:file_export")
   implementation project(":feature:file:file_service")
-  implementation "com.google.dagger:hilt-android:2.44"
-  kapt "com.google.dagger:hilt-android-compiler:2.44"
+  implementation libs.hilt
+  kapt libs.hilt.compiler
 }

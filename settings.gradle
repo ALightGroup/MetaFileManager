@@ -15,11 +15,16 @@ dependencyResolutionManagement {
     mavenLocal()
     maven { url "https://jitpack.io" }
   }
+  versionCatalogs {
+    libs {
+      from("com.alg.plugin.version:catalog:0.0.1")
+    }
+  }
 }
 rootProject.name = "MetaFileManager"
 include ':app'
 include ':core:lib'
 include ':core:resources'
-//include ':feature:file:file_ui'
+include ':feature:file:file_export'
 include ':feature:file:file_service'
-include ':feature:file:file_ui'
+

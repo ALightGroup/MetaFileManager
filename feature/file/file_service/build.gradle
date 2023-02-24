@@ -4,17 +4,15 @@ plugins {
 }
 
 android {
-  namespace 'com.alg.file'
-  compileSdk 32
+  namespace 'com.alg.metafile.file'
+  compileSdkPreview libs.versions.compilesdk.get()
 
   defaultConfig {
-    minSdk 23
-    targetSdk 32
-
+    minSdk libs.versions.minSdk.get().toInteger()
+    targetSdkPreview libs.versions.targetsdk.get()
     testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     consumerProguardFiles "consumer-rules.pro"
   }
-
   buildTypes {
     release {
       minifyEnabled false
@@ -22,20 +20,26 @@ android {
     }
   }
   compileOptions {
-    sourceCompatibility JavaVersion.VERSION_1_8
-    targetCompatibility JavaVersion.VERSION_1_8
+    sourceCompatibility JavaVersion.VERSION_11
+    targetCompatibility JavaVersion.VERSION_11
   }
   kotlinOptions {
-    jvmTarget = '1.8'
+    jvmTarget = libs.versions.jvmTarget.get()
+  }
+  buildFeatures {
+    compose = true
+  }
+  composeOptions {
+    kotlinCompilerExtensionVersion = libs.versions.kotlinCompilerExtensionVersion.get()
   }
 }
 
 dependencies {
 
-  implementation 'androidx.core:core-ktx:1.7.0'
-  implementation 'androidx.appcompat:appcompat:1.4.1'
-  implementation 'com.google.android.material:material:1.5.0'
-  testImplementation 'junit:junit:4.13.2'
-  androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-  androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+  implementation project(":core:lib")
+  implementation project(":feature:file:file_export")
+
+  testImplementation libs.junit
+  androidTestImplementation libs.android.junit
+  androidTestImplementation libs.android.espresso
 }

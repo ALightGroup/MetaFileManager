@@ -17,8 +17,8 @@
             <option value="$PROJECT_DIR$/core/resources" />
             <option value="$PROJECT_DIR$/feature" />
             <option value="$PROJECT_DIR$/feature/file" />
+            <option value="$PROJECT_DIR$/feature/file/file_export" />
             <option value="$PROJECT_DIR$/feature/file/file_service" />
-            <option value="$PROJECT_DIR$/feature/file/file_ui" />
           </set>
         </option>
       </GradleProjectSettings>
