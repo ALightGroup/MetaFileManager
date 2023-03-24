@@ -1,7 +1,7 @@
-package com.alg.matefile.lib.framework.service
+package com.alg.matefile.lib.framework.domain
 
-import com.alg.matefile.lib.framework.repository.LifecycleRepository
-import com.alg.matefile.lib.framework.repository.LifecycleRepositoryFactory
+import com.alg.matefile.lib.framework.data.repository.LifecycleRepository
+import com.alg.matefile.lib.framework.data.repository.LifecycleRepositoryFactory
 
 abstract class LocalService {
 

@@ -1,4 +1,4 @@
-package com.alg.matefile.lib.framework.module
+package com.alg.matefile.lib.framework.domain
 
 interface IBridgeCenter<T : IModule> {
 

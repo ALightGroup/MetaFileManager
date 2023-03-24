@@ -1,4 +1,4 @@
-package com.alg.matefile.lib.framework.service
+package com.alg.matefile.lib.framework.domain
 
 import com.alibaba.android.arouter.facade.template.IProvider
 

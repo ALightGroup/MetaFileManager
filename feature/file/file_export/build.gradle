@@ -1,6 +1,7 @@
 plugins {
   id 'com.android.library'
   id 'org.jetbrains.kotlin.android'
+  id 'kotlin-kapt'
 }
 
 android {
@@ -9,9 +10,14 @@ android {
 
   defaultConfig {
     minSdk libs.versions.minSdk.get().toInteger()
-    targetSdkPreview libs.versions.targetsdk.get()
+    targetSdk 33
     testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     consumerProguardFiles "consumer-rules.pro"
+    kapt {
+      arguments {
+        arg("AROUTER_MODULE_NAME", project.getName())
+      }
+    }
   }
   buildTypes {
     release {
@@ -31,6 +37,8 @@ android {
 dependencies {
 
   implementation project(":core:lib")
+
+  kapt libs.arouter.compiler
 
   testImplementation libs.junit
   androidTestImplementation libs.android.junit

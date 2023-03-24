@@ -1,4 +1,4 @@
-package com.alg.matefile.lib.framework.repository
+package com.alg.matefile.lib.framework.data.repository
 
 import kotlinx.coroutines.MainScope
 

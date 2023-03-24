@@ -1,7 +1,7 @@
-package com.alg.matefile.lib.framework.manager
+package com.alg.matefile.lib.framework.domain.manager
 
 import android.app.Application
-import com.alg.matefile.lib.framework.service.IService
+import com.alg.matefile.lib.framework.domain.IService
 import com.alibaba.android.arouter.launcher.ARouter
 
 object ServiceManager {
@@ -11,5 +11,5 @@ object ServiceManager {
   }
 
   fun getService(serviceClass: Class<out IService>): IService =
-    ARouter.getInstance().navigation(serviceClass)
+    ARouter.getInstance().build("/file/test").navigation() as IService
 }

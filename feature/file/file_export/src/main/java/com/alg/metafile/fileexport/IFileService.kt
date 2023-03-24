@@ -1,6 +1,6 @@
 package com.alg.metafile.fileexport
 
-import com.alg.matefile.lib.framework.service.IService
+import com.alg.matefile.lib.framework.domain.IService
 
 interface IFileService : IService {
 

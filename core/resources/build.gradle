@@ -8,7 +8,7 @@ android {
 
   defaultConfig {
     minSdk libs.versions.minSdk.get().toInteger()
-    targetSdkPreview libs.versions.targetsdk.get()
+    targetSdk 33
     testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     consumerProguardFiles "consumer-rules.pro"
   }

@@ -12,13 +12,13 @@ android {
   defaultConfig {
     applicationId "com.alg.metafile"
     minSdk libs.versions.minSdk.get().toInteger()
-    targetSdkPreview libs.versions.targetsdk.get()
+    targetSdk 33
     versionCode 1
     versionName "1.0"
     testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-    javaCompileOptions {
-      annotationProcessorOptions {
-        arguments = [AROUTER_MODULE_NAME: project.getName()]
+    kapt {
+      arguments {
+        arg("AROUTER_MODULE_NAME", project.getName())
       }
     }
   }
@@ -43,5 +43,8 @@ dependencies {
   implementation project(":feature:file:file_export")
   implementation project(":feature:file:file_service")
   implementation libs.hilt
+  implementation "com.meituan.android.walle:library:1.1.7"
+
   kapt libs.hilt.compiler
+  kapt libs.arouter.compiler
 }

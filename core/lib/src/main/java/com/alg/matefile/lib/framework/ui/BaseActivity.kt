@@ -1,4 +1,4 @@
-package com.alg.matefile.lib
+package com.alg.matefile.lib.framework.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

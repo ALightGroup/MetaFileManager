@@ -1,7 +1,6 @@
-package com.alg.matefile.lib.framework.module
+package com.alg.matefile.lib.framework.domain
 
-import com.alg.matefile.lib.framework.manager.ServiceManager
-import com.alg.matefile.lib.framework.service.IService
+import com.alg.matefile.lib.framework.domain.manager.ServiceManager
 
 abstract class BaseBridge<T : IModule> {
 
