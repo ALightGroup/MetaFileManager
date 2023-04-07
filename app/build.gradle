@@ -7,12 +7,12 @@ plugins {
 
 android {
   namespace 'com.alg.metafile'
-  compileSdkPreview libs.versions.compilesdk.get()
+  compileSdk libs.versions.compilesdk.get().toInteger()
 
   defaultConfig {
     applicationId "com.alg.metafile"
     minSdk libs.versions.minSdk.get().toInteger()
-    targetSdk 33
+    targetSdk libs.versions.targetsdk.get().toInteger()
     versionCode 1
     versionName "1.0"
     testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -43,7 +43,6 @@ dependencies {
   implementation project(":feature:file:file_export")
   implementation project(":feature:file:file_service")
   implementation libs.hilt
-  implementation "com.meituan.android.walle:library:1.1.7"
 
   kapt libs.hilt.compiler
   kapt libs.arouter.compiler

@@ -4,11 +4,11 @@ plugins {
 
 android {
   namespace 'com.alg.metafile.resources'
-  compileSdkPreview libs.versions.compilesdk.get()
+  compileSdk libs.versions.compilesdk.get().toInteger()
 
   defaultConfig {
     minSdk libs.versions.minSdk.get().toInteger()
-    targetSdk 33
+    targetSdk libs.versions.targetsdk.get().toInteger()
     testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     consumerProguardFiles "consumer-rules.pro"
   }

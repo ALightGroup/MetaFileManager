@@ -20,7 +20,7 @@ class FileActivity : BaseActivity() {
       FileUI(fileViewModel)
     }
     fileViewModel.getFileList()
-    val callback = onBackPressedDispatcher.addCallback(this) {
+    onBackPressedDispatcher.addCallback(this) {
       if(!fileViewModel.onBack()){
         finish()
       }
