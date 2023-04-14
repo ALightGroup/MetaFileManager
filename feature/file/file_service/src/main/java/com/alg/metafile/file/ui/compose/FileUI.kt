@@ -1,5 +1,6 @@
 package com.alg.metafile.file.ui.compose
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -14,18 +15,27 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -34,17 +44,30 @@ import com.alg.matefile.lib.ROOT_PATH
 import com.alg.matefile.lib.common.ui.compose.widget.VectorImage
 import com.alg.metafile.file.R
 import com.alg.metafile.file.state.holder.FileListHolder
+import com.alg.metafile.file.state.holder.SortType.Companion.DEFAULT
+import com.alg.metafile.file.state.holder.SortType.Companion.SPACE
+import com.alg.metafile.file.state.holder.SortType.Companion.TIME
 import com.alg.metafile.file.state.viewmodel.FileViewModel
+import com.blankj.utilcode.util.FileUtils
+import java.text.SimpleDateFormat
+import java.util.Date
 
 @Composable fun FileUI(fileViewModel: FileViewModel) {
-  val listState = fileViewModel.files.observeAsState(FileListHolder())
-  FileBody(listState.value) { path ->
+  val list by fileViewModel.files.observeAsState(FileListHolder())
+  val sortType = remember { mutableStateOf(DEFAULT) }
+  list.sortType = sortType.value
+  FileBody(list, sortType) { path ->
     path?.let { fileViewModel.getFileList(it) }
   }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
-@Composable fun FileBody(holder: FileListHolder, getFileList: (String?) -> Unit) {
+@Composable fun FileBody(
+  holder: FileListHolder,
+  sortType: MutableState<Int>,
+  getFileList: (String?) -> Unit
+) {
+  var expanded by remember { mutableStateOf(false) }
   Column(modifier = Modifier.fillMaxSize()) {
     TopAppBar(
       title = {
@@ -56,29 +79,55 @@ import com.alg.metafile.file.state.viewmodel.FileViewModel
         }
         Text(text = title)
       },
-      // navigationIcon = {
-      //   IconButton(onClick = { /* doSomething() */ }) {
-      //     Icon(
-      //       imageVector = Icons.Filled.Menu,
-      //       contentDescription = null,
-      //       tint = Color.Gray
-      //     )
-      //   }
-      // },
       actions = {
-        IconButton(onClick = { /* doSomething() */ }) {
+        IconButton(onClick = {}) {
           Icon(
-            imageVector = Icons.Filled.Edit,
+            imageVector = Icons.Filled.Search,
             contentDescription = null,
             tint = Color.Gray
           )
         }
-        IconButton(onClick = { /* doSomething() */ }) {
-          Icon(
-            imageVector = Icons.Filled.Settings,
+        IconButton(onClick = {
+          expanded = true
+        }) {
+          Image(
+            painter = painterResource(id = R.drawable.file_ic_sort),
             contentDescription = null,
-            tint = Color.Gray
+            colorFilter = ColorFilter.tint(Color.Gray)
           )
+        }
+        DropdownMenu(expanded = expanded,
+          onDismissRequest = { expanded = false }) {
+          DropdownMenuItem(
+            text = { Text(stringResource(id = R.string.file_sort_by_default)) },
+            onClick = { sortType.value = DEFAULT },
+            leadingIcon = {
+              Icon(
+                Icons.Filled.List,
+                contentDescription = null,
+                tint = Color.Gray
+              )
+            })
+          DropdownMenuItem(
+            text = { Text(stringResource(id = R.string.file_sort_by_time)) },
+            onClick = { sortType.value = TIME },
+            leadingIcon = {
+              Image(
+                painterResource(id = R.drawable.file_ic_time),
+                contentDescription = null,
+                colorFilter = ColorFilter.tint(Color.Gray)
+              )
+            })
+          DropdownMenuItem(
+            text = { Text(stringResource(id = R.string.file_sort_by_size)) },
+            onClick = { sortType.value = SPACE },
+            leadingIcon = {
+              Image(
+                painterResource(id = R.drawable.file_ic_space),
+                contentDescription = null,
+                colorFilter = ColorFilter.tint(Color.Gray)
+              )
+            })
         }
       }
     )
@@ -96,26 +145,30 @@ import com.alg.metafile.file.state.viewmodel.FileViewModel
             .height(0.dp)
         )
       }
-      holder.fileList.forEach {
+      holder.getFileList().forEach {
         item {
-          Row(modifier = Modifier
-            .fillMaxWidth()
-            .background(color = Color.White, shape = RoundedCornerShape(16.dp))
-            .clickable {
-              getFileList(it.absolutePath)
+          Column {
+            Row(modifier = Modifier
+              .fillMaxWidth()
+              .background(color = Color.White, shape = RoundedCornerShape(16.dp))
+              .clickable {
+                getFileList(it.absolutePath)
+              }
+              .absolutePadding(left = 16.dp, top = 8.dp, right = 16.dp, bottom = 8.dp)) {
+              VectorImage(
+                resId = R.drawable.file_ic_folder, modifier = Modifier.size(32.dp)
+              )
+              Text(
+                text = it.name,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.W500,
+                modifier = Modifier
+                  .absolutePadding(left = 10.dp)
+                  .align(Alignment.CenterVertically)
+              )
             }
-            .absolutePadding(left = 16.dp, top = 8.dp, right = 16.dp, bottom = 8.dp)) {
-            VectorImage(
-              resId = R.drawable.file_ic_folder, modifier = Modifier.size(32.dp)
-            )
-            Text(
-              text = it.name,
-              fontSize = 16.sp,
-              fontWeight = FontWeight.W500,
-              modifier = Modifier
-                .absolutePadding(left = 10.dp)
-                .align(Alignment.CenterVertically)
-            )
+            Text(text = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Date(it.lastModified())))
+            Text(text = FileUtils.getSize(it))
           }
         }
       }

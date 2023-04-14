@@ -1,0 +1,7 @@
+<resources>
+
+    <string name="file_sort_by_default">默认排序</string>
+    <string name="file_sort_by_time">按修改时间排序</string>
+    <string name="file_sort_by_size">按大小排序</string>
+
+</resources>

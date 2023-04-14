@@ -52,6 +52,7 @@ dependencies {
   api libs.bundles.compose
   api libs.arouter
   api libs.compose.navigation
+  api libs.blanj
 
   implementation libs.accompanist.drawablepainter
   implementation "com.alg.plugin:frame:0.0.1"
